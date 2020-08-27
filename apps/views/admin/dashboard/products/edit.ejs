@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-1.9.0.js"></script>
+    <%- include('../../layout/head.ejs') %>
+    <title><%= title %></title>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <%- include('../../layout/nav.ejs') %>
+            <div class="col-md-9">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <form class="form-horizontal" method="POST" action="/admin/products/new">
+                                    <fieldset>
+                                    <!-- Form Name -->
+                                    <legend>EDIT PRODUCTS</legend>
+                                    <!-- Text input-->
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label" for="product_id" >PRODUCT ID</label>  
+                                            <div class="col-md-4">
+                                                <input value="<%= data.product.id %>" id="product_id" name="product_id" placeholder="Product ID" class="form-control input-md product_id" required="" type="text" readonly>
+                                            </div>
+                                    </div>
+                                    <!-- Text input-->
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label" for="product_name">PRODUCT NAME</label>  
+                                        <div class="col-md-4">
+                                            <input value="<%= data.product.name %>" id="product_name" name="product_name" placeholder="Product Name" class="form-control input-md product_name" required="" type="text">  
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label" for="product_name">PRODUCT PRICES</label>  
+                                        <div class="col-md-4">
+                                            <input value="<%= data.product.prices %>" name="produce_prices" id="product_prices"placeholder="Product Prices" class="form-control input-md product_prices" required="" type="number" min="0" step="10000" >  
+                                        </div>
+                                    </div>
+                                
+                                    <!-- Text input-->
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label" for="product_description">PRODUCT DESCRIPTION </label>  
+                                        <div class="col-md-4">
+                                            <textarea value="<%= data.product.description %>" id="product_description" name="product_description" placeholder="Product Description" class="form-control input-md product_description" required="" type="text">  </textarea>
+                                        </div>
+                                    </div>
+                                
+                                    <!-- Select Basic -->
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label" for="product_categorie">PRODUCT CATEGORY</label>
+                                        <div class="col-md-4">
+                                            <select id="product_categorie" name="product_categorie" class="form-control product_category">
+                                                <% for(let i = 0; i < data.category.length; i++){ %>
+                                                    <option> <%= data.category[i] %></option>    
+                                                <%}%>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <!-- Text input-->
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label" for="author">AUTHOR</label>  
+                                        <div class="col-md-4">
+                                            <input value="<%= data.product.author %>" id="author" name="author" placeholder="Author" class="form-control input-md product_author" required="" type="text">   
+                                        </div>
+                                    </div>
+                                
+                                    <!-- Button -->
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label" for="singlebutton"></label>
+                                        <div class="col-md-4">
+                                            <input type="button" class="btn btn-primary product_edit" name="product_edit" value="Save">
+                                        </div>
+                                    </div>
+                                    </fieldset>
+                                    </form>
+                            </div>
+                            <%- include('../../layout/category.ejs') %>        
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="/static/js/product.js"></script>
+</body>
+</html>

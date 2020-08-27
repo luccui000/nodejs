@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-1.9.0.js"></script>
+    <%- include('../../layout/head.ejs') %>
+    <title><%= title %></title>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <%- include('../../layout/nav.ejs') %>
+            <div class="col-md-10">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                          <div class="col-md-2"><h4>Edit User</h4></div>
+                          <div class="col-md-2"></div>
+                          <div class="col-md-2"></div>
+                          <div class="col-md-2"></div>
+                          <div class="col-md-2"></div>
+                          <div class="col-md-2">
+                            <img class="img-fluid"  src="/static/images/img-05.png" alt="Logo image" />
+                          </div>
+                        </div><hr>
+                        <div class="row">
+                            <div class="col-md-8">
+                              <div class="container">
+                                <div class="row">
+                                  <div class="col-lg-7 col-md-7 col-sm-12 col-xs-12">
+                                        <div class="column is-4">
+                                          <article class="message is-info">
+                                              <div class="message-header "><h2>Thông tin</h2></div>
+                                            <div class="message-body field">
+                                              <form>
+                                                <input type="hidden" name="id" class="id" value="<%= data.user.id %>">
+                                                <div class="columns">
+                                                  <div class="column">
+                                                    <label for="username" class="label">Username: </label>
+                                                    <div class="control has-icons-left">
+                                                      <input type="text" class="username" value="<%= data.user.username %>" readonly>
+                                                      <span class="icon is-small is-left">
+                                                       <i class="fa fa-user"></i>
+                                                      </span>
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                                <div class="columns">
+                                                  <div class="column">
+                                                    <label for="email" class="label">Email: </label>
+                                                    <div class="control">
+                                                      <input type="email" class="email" placeholder="Example: abc@fzx.com" value="<%= data.user.email %>">
+                                                    </div>
+                                                  </div>
+                                                  <div class="column">
+                                                    <label for="tel" class="label">Điện thoại: </label>
+                                                    <div class="control">
+                                                      <input type="tel" class="input" placeholder="Điện thoại" >
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                                <div class="columns">
+                                                  <div class="column">
+                                                    <label for="fechaExp" class="label">Ngày sinh: </label>
+                                                    <div class="control">
+                                                      <input type="date" class="input" placeholder="aaaa-mm-dd">
+                                                    </div>
+                                                  </div>
+                                                  <div class="column">
+                                                    <label for="perfil" class="label">Phân quyền: </label>
+                                                    <div class="control has-icons-left">
+                                                      <div class="select" >
+                                                        <select id="addRole">
+                                                          <option value="admin">Admin</option>
+                                                          <option value="user">User</option>
+                                                          <option value="qtv">QTV</option>
+                                                        </select>
+                                                      </div>
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                                <input style="margin-top: 20px;" type="button" class="btn btn-success user_edit" value="Save" name="user_edit">
+                                              </form>
+                                            </div>
+                                          </article>
+                                        </div>
+                                      </div>
+                                     <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                              <div class="row">
+                                                  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="border-radius: 16px;">
+                                                      <div class="well profile col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
+                                                              <h5 style="text-align:center;font-size: large;">
+                                                                <strong id="user-name"><%= data.user.username %></strong>
+                                                              </h5>
+                                                              <p style="text-align:center;font-size: medium;" id="user-frid"><%= data.user.id %></p>
+                                                              <p style="text-align:center;font-size: medium;overflow-wrap: break-word;" id="user-email"><%= data.user.email %></p>
+                                                              <p style="text-align:center;font-size: medium;"><strong>A/C status: </strong><span class="tags" id="user-status"><%= data.user.roles %></span></p>
+                                                              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 divider text-center"></div>
+                                                              <p style="text-align:center;font-size: medium;"><strong>Job role</strong></p>
+                                                              <p style="text-align:center;font-size: medium;" id="user-role"> Unknown</p>
+                                                              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 divider text-center"></div>
+                                                                  <div class="col-lg-6 left" style="text-align:center;overflow-wrap: break-word;">
+                                                                      <h4><p style="text-align: center;"><strong id="user-globe-rank">245 </strong></p></h4>           
+                                                                      <p><small class="label label-success">Global Ranking</small></p>
+                                                                      <button class="btn btn-success btn-block"><span class="fa fa-plus-circle"></span> Follow </button>
+                                                                  </div>
+                                                                  <div class=" col-lg-6 left" style="text-align:center;overflow-wrap: break-word;">
+                                                                      <h4><p style="text-align: center;"><strong id="user-college-rank">245 </strong></p></h4>                   
+                                                                      <p> <small class="label label-warning">College Ranking</small></p>
+                                                                      <button class="btn btn-info btn-block"><span class="fa fa-user"></span> View Profile </button>
+                                                                  </div>
+                                                            </div>
+                                                          </div>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div>    
+                                      </div>
+                                      
+                                </div>
+                                <%- include('../../layout/category.ejs') %>
+                              </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="/static/js/role.js"></script>
+</body>
+</html>

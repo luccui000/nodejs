@@ -25,7 +25,6 @@ app.use(sesssion({
 app.use(controller);
 
 
-
 const host = config.get('server.host');
 const port = config.get('server.port');
 

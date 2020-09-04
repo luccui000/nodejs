@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <%- include('../../layout/head.ejs') %>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <title><%= title %></title>
 </head>
 <body>
@@ -32,7 +33,7 @@
                         <hr>
                         <div class="row">
                             <div class="col-md-8">
-                                <form class="form-horizontal" method="POST" action="/admin/products/new">
+                                <form class="form-horizontal" method="POST" action="/admin/products/new" enctype="multipart/form-data">
                                     <fieldset>
                                     <!-- Form Name -->
                                     <legend>PRODUCTS</legend>
@@ -40,7 +41,7 @@
                                     <div class="form-group">
                                         <label class="col-md-4 control-label" for="product_id" >PRODUCT ID</label>  
                                             <div class="col-md-4">
-                                                <input value="<%= data.product.id %>" id="product_id" name="product_id" placeholder="Product ID" class="form-control input-md" required="" type="text" readonly>
+                                                <input value="<%= data.product.id %>" id="product_id" name="product_id" placeholder="Product ID" class="form-control input-md product_id" required="" type="text" readonly>
                                             </div>
                                     </div>
                                     <!-- Text input-->
@@ -62,6 +63,17 @@
                                         <label class="col-md-4 control-label" for="product_description">PRODUCT DESCRIPTION </label>  
                                         <div class="col-md-4">
                                             <textarea id="product_description" name="product_description" placeholder="Product Description" class="form-control input-md" required="" type="text">  </textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label" for="product_images">PRODUCT IMAGES </label>  
+                                        <div class="col-md-4">
+                                            <span>Chon file</span>
+                                            <input class="product_images" type="file" multiple size="50" onchange="previewFile()" name="product_images" id="inpImage" accept="image/*">
+                                            <div class="image_preview" id="imagePreview">
+                                                <img src="" alt="" id="image_preview__image">
+                                                <span id="image_preview__default_text">Image Preview</span>
+                                            </div>
                                         </div>
                                     </div>
                                 
@@ -101,5 +113,6 @@
             </div>
         </div>
     </div>
+    <script src="/static/js/image-preview.js"></script>
 </body>
 </html>

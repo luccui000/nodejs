@@ -17,7 +17,8 @@ function Product() {
                 dataType: 'json',
                 success: function(res) {
                     if(res && res.status_code == 200) {
-                        location.reload();
+                        alert("Da luu vao co so du lieu");
+                        window.location.href = base_url + '/admin/products';
                     }
                 }
             });

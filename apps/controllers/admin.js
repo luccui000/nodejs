@@ -1,5 +1,6 @@
 var app = require('express');
 var config = require('config');
+var fileUpload = require('express-fileupload');
 var userModel = require('../models/user');
 var postModel = require('../models/post');
 var pdModel   = require('../models/product');
@@ -7,10 +8,12 @@ var encrypt = require('../helper/encryption');
 var set_role = require('../helper/setRole');
 var normalizeText = require('../helper/normolizeText');
 var makePdId = require('../helper/makePdId');
+var formatImagePath = require('../helper/formatProductImage');
 
 var router = app.Router();
 var counter = 0;
 
+router.use(fileUpload());
 router.get('/', function(req, res) {
     if(req.session.user) {
         res.redirect('/admin/posts');
@@ -253,9 +256,10 @@ router.get('/products', function(req, res) {
 });
 router.get('/products/new', function(req, res) {
     if(req.session.user) {
+        var cg = require("../helper/productCategorie");
         var product = {
             id: makePdId.makeId(config.get('IDProduct')),
-            category: ['Rau', 'Thực phẩm tươi sống ', 'Thực phẩm đông lạnh', 'Đồ điện tử']
+            category: cg.nameCategorie
         };
         res.render('admin/dashboard/products/new', { title: 'Add Product | Luc Cui', data: { product: product }});
     } else {
@@ -274,7 +278,80 @@ router.post('/products/new', function(req, res) {
             author: newPro.author,
             created_at: new Date()
         };
+        //["Rau", "Thịt", "Đồ dùng", "Quần áo", "Thức ăn"];
+        var proCategories = require("../models/product_categories");
+        var cg = require('../helper/productCategorie');
+
+        var stt = proCategories.getCounterByPdId(newPro.product_id);
+        var obj = { };
+        stt.then(function(data) {
+            obj = data[0];
+            if(!obj.value)
+            
+                obj.value = 0;
+        }).catch(function(err) {
+            proCategories.addNewProductCounter(newPro.product_id).then(function(data) {
+                obj = data[0];
+            }).catch(function(err) {
+                res.json({ message: err });
+            });
+        })
+        switch(pdObj.category) {
+            case cg.nameCategorie[cg.CATEGORIE.RAU]:
+                obj.key = newPro.product_id;
+                obj.value++;
+                break;
+            case cg.nameCategorie[cg.CATEGORIE.THIT]:
+                obj.key = newPro.product_id;
+                obj.value++;
+                break;
+            case cg.nameCategorie[cg.CATEGORIE.DODUNG]:
+                obj.key = newPro.product_id;
+                obj.value++;
+                break;
+            case cg.nameCategorie[cg.CATEGORIE.QUANAO]:
+                obj.key = newPro.product_id;
+                obj.value++;
+                break;
+            case cg.nameCategorie[cg.CATEGORIE.THUCAN]:
+                obj.key = newPro.product_id;
+                obj.value++;
+                break;
+        };
+        
+        var status = proCategories.updateProductCategorie(obj); 
+
+        status.then(function(data) {
+            res.status(200).json({ message: "OKE" });
+        }).catch(function(err) {
+            res.json({ error: err });
+        })
         var result = pdModel.addProduct(pdObj);
+
+        // let formidable = require('formidable');
+        let fs = require('fs');
+        // var form = formidable.IncomingForm();
+        var Stream = require('stream').Transform;
+
+        // form.uploadDir = "./public/images";  //duong dan chua file anh
+        // form.keepExtensions = true;                     // giu duoi ten file
+        // form.maxFieldsSize = 10 * 1024 * 1024;          // dung luong upload cho phep 10mb
+        // form.multiples = true;                          // Cho phep upload nhieu file
+        var data = new Stream();
+        var files = req.files.product_images;
+
+        var arrOfFiles = files;
+
+        if(arrOfFiles.length > 0) {
+            var get_path = require('../views/admin/dashboard/products/images/getPath');
+            arrOfFiles.forEach((listFile) => {
+                let len = listFile.name.length;
+                var file_path = get_path.getPath() + "/" + formatImagePath.formatText(newPro.product_id) + "-" + Math.floor(Math.random() * 100) + "." + listFile.name.substring(len - 3);
+                fs.writeFile(file_path, Buffer(listFile.data, 'base64'), function(err) {
+                    res.json({err: err});
+                });
+            });            
+        } 
         result.then(function(data) {
             res.redirect('/admin/products/new');
         }).catch(function(err) {
@@ -302,7 +379,7 @@ router.put('/products/edit', function(req, res) {
         var pdEdit = req.body;
         var result = pdModel.updateProduct(pdEdit);
         result.then(function(data) {
-            res.redirect('/admin/products');
+            res.status(200).json({ status_code: 200});
         }).catch(function(err) {
             res.status(500).json({ status_code: 500, data: { error: err }});
         })

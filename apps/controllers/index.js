@@ -1,7 +1,10 @@
 var express = require('express');
-var io = require('socket.io').listen(8080);
+var upload = require('express-fileupload');
+// var io = require('socket.io').listen(8080);
 var counter = 0;
 var router = express.Router();
+var fileupload = require('express-fileupload');
+
 
 router.use('/admin', require(__dirname + '/admin'));
 router.use('/blog', require(__dirname + '/blog'));
@@ -18,17 +21,17 @@ router.use('/get-cookies', function(req, res) {
     res.json({ cookies: cookies });
 });
 
-io.sockets.on('connect', function(socket) {
-    counter++;
-    io.sockets.emit('message', { count : counter });
+// io.sockets.on('connect', function(socket) {
+//     counter++;
+//     io.sockets.emit('message', { count : counter });
 
-    socket.disconnect('disconnect', function() {
-        counter--;
-        io.sockets.emit('message', { count : counter });
-    })
-});
+//     socket.disconnect('disconnect', function() {
+//         counter--;
+//         io.sockets.emit('message', { count : counter });
+//     })
+// });
 router.use('/', function(req, res) {
     res.render('blog/index', { title: 'Home Page | Luc Cui'});
-})
+});
 
 module.exports = router;

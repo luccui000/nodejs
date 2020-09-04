@@ -41,6 +41,17 @@
                                         </div>
                                     </div>
                                 
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label" for="product_images">PRODUCT IMAGES </label>  
+                                        <div class="col-md-4">
+                                            <span>Chon file</span>
+                                            <input class="product_images" type="file" multiple size="50" onchange="previewFile()" name="product_images" id="inpImage" accept="image/*">
+                                            <div class="image_preview" id="imagePreview">
+                                                <img src="" alt="" id="image_preview__image">
+                                                <span id="image_preview__default_text">Image Preview</span>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <!-- Text input-->
                                     <div class="form-group">
                                         <label class="col-md-4 control-label" for="product_description">PRODUCT DESCRIPTION </label>  
@@ -86,5 +97,6 @@
         </div>
     </div>
     <script type="text/javascript" src="/static/js/product.js"></script>
+    <script src="/static/js/image-preview.js"></script>
 </body>
 </html>

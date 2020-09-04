@@ -7,30 +7,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="">
-
   <title><%= title %></title>
-
-  <!-- Bootstrap core CSS -->
-  <link href="/static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
+  <%- include('admin/layout/head.ejs') %>
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/css/mdb.min.css" rel="stylesheet">
 </head>
 
 <body>
+  <%- include('admin/layout/main_nav.ejs') %>
 <!-- Page Content -->
 <div class="container">
-
     <!-- Portfolio Item Heading -->
     <h1 class="my-4">Lực Cui
       <small>Shop Đa dụng</small>
     </h1>
-  
     <!-- Portfolio Item Row -->
     <div class="row">
-  
       <div class="col-md-8">
         <img class="img-fluid" src="/static/images/1.png" alt="">
       </div>
-  
       <div class="col-md-4">
         <h3 class="my-4">Project Description</h3>
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae. Sed dui lorem, adipiscing in adipiscing et, interdum nec metus. Mauris ultricies, justo eu convallis placerat, felis enim.</p>
@@ -42,7 +36,6 @@
           <li>Adipiscing Elit</li>
         </ul>
       </div>
-  
     </div>
     <!-- /.row -->
   
@@ -50,12 +43,12 @@
     <h3 class="my-4">All My Products</h3>
     <div class="row">
         <% for(let i = 0; i < data.product.length; i++) {%>
-            <div class="col-md-4 col-12">
-                <div class="card" style="width:  18rem;">
+            <div class="col-md-3 col-12">
+                <div class="card" style="width: 18rem;">
                 <img class="img-fluid" src="/static/images/<%= i + 1 %>.jpg" alt="" width="500" height="300">
-                    <div class="card-body">
+                    <div class="card-body text-center">
                         <h5 class="card-title"><%= data.product[i].name %></h5>
-                        <h6 class="card-subtitle mb-2 text-muted edit_prices"><%= data.product[i].prices %> <strong>VNĐ</strong></h6>
+                        <h6 class="card-subtitle mb-2 text-muted edit_prices"><%= data.product[i].prices %> <strong>vnđ</strong></h6>
                         <p class="card-text text-truncate"><%= data.product[i].description %></p>
                         <a href="/products/<%= data.product[i].id %>" class="btn btn-primary">Chi tiết</a>
                     </div>

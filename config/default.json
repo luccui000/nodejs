@@ -8,7 +8,7 @@
         "database"  : "myWeb",
         "port"      : 3306,
         "user"      : "root",
-        "password"  : "Mnbvcxz@123"
+        "password"  : ""
     }, 
     "secret" : "123456789",
     "IDProduct": 5
